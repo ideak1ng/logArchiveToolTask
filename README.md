@@ -1,5 +1,6 @@
 # logArchiveToolTask
 Project for "Log Archive Tool" task from Linux roadmap on (roadmap.sh)
+**Note: this tool was created and tested only on Ubuntu distribution**
 
 ## Installing (Manual)
 1. **Download project**, you can just download zip or use `git clone https://github.com/ideak1ng/logArchiveToolTask.git` command in your terminal
