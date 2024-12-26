@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Variables
+log_dir=$1
+current_date=$(date +%Y%m%d_%H%M%S )
+archived_logs_dir=$HOME/archivedLogs
+error_log_file=$archived_logs_dir/errorLogs.log
+log_file=$archived_logs_dir/logs.log
+
 # Check to make sure the user has entered exactly 1 argument
 if [ $# -ne 1 ]
 then
@@ -14,38 +21,33 @@ check_exit_status() {
 if [ $? -ne 0 ]
 then
 	echo "An error has occurred!"
-	echo "Check $errorLogFile"
+	echo "Check $error_log_file"
 	exit 1
 fi
 }
 
 # Rename first user's argument for ease of use
-logDir=$1
 
-# Checks if user's directory exists
-if [ ! -d $logDir ]
+# Checks if user's directory exists and user have required permissions
+if [ ! -d $log_dir ]
 then
-	echo "Error: Directory $logDir does not exists"
+	echo "Error: Directory $log_dir does not exists"
+	exit 1
+elif [ ! -r $log_dir ]
+then
+	echo "Error: You have not read permission!"
 	exit 1
 fi
 
-currentDate=$(date +%Y%m%d_%H%M%S )
-check_exit_status
-archivedLogsDir=$HOME/archivedLogs
-
 # Create archive directory if doesn't exists
-mkdir -p $archivedLogsDir
+mkdir -p $archived_logs_dir
 check_exit_status
 
-logFile=$archivedLogsDir/logs.log
-errorLogFile=$archivedLogsDir/errorLogs.log
-
-
-tar -czvf $archivedLogsDir/logs_archive_$currentDate.tar.gz $logDir >> $logFile 2>> $errorLogFile
+tar -czvf $archived_logs_dir/logs_archive_$current_date.tar.gz $log_dir >> $log_file 2>> $error_log_file
 check_exit_status
 
 
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Archive \"logs_archive_$currentDate.tar.gz\" successfully created!" >> "$logFile"
-echo "Logs was successfully archived to $archivedLogsDir"
-echo "Log file path: $logFile"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Archive \"logs_archive_$current_date.tar.gz\" successfully created!" >> "$log_file"
+echo "Logs was successfully archived to $archived_logs_dir"
+echo "Log file path: $log_file"
 
