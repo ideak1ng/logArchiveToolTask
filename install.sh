@@ -21,8 +21,8 @@ then
 
 	read action;
 	case $action in
-		1) sudo rm /usr/local/bin/log-archive && echo "log-archive was successfully uninstalled!" && exit 0;;
-		2) sudo rm /usr/local/bin/log-archive;;
+		1) sudo rm $install_to/log-archive && echo "log-archive was successfully uninstalled!" && exit 0;;
+		2) sudo rm $install_to/log-archive;;
 		3) exit 0;;
 	esac
 fi
