@@ -26,8 +26,6 @@ then
 fi
 }
 
-# Rename first user's argument for ease of use
-
 # Checks if user's directory exists and user have required permissions
 if [ ! -d $log_dir ]
 then
@@ -35,7 +33,7 @@ then
 	exit 1
 elif [ ! -r $log_dir ]
 then
-	echo "Error: You have not read permission!"
+	echo "Error: You have not read permission for $log_dir!"
 	exit 1
 fi
 
